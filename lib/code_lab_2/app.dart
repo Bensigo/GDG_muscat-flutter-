@@ -6,13 +6,11 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Flutter Code Lab 2'),
-          elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0 : 1,
-        ),
-        body: Home(),
-      ),
+      home: Home(),
+      theme: ThemeData(
+          primaryColor: Theme.of(context).platform == TargetPlatform.iOS
+              ? Colors.red[400]
+              : Colors.blue[400]),
     );
   }
 }

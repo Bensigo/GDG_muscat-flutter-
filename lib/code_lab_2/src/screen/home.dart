@@ -18,7 +18,42 @@ class RandomWords extends State<Home> {
   TextStyle _biggerFont = const TextStyle(fontSize: 18.0);
   @override
   Widget build(BuildContext context) {
-    return _buildSuggestion();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Flutter Code Lab 2'),
+        elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0 : 1,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.list),
+            color: Colors.white,
+            onPressed: () => _handlePressed(context),
+          )
+        ],
+      ),
+      body: _buildSuggestion(),
+    );
+  }
+
+  void _handlePressed(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute<void>(builder: (BuildContext context) {
+      final Iterable<ListTile> tiles = _saved.map((WordPair pair) {
+        return ListTile(
+          title: Text(
+            pair.asPascalCase,
+            style: _biggerFont,
+          ),
+        );
+      });
+      final List<Widget> divided =
+          ListTile.divideTiles(context: context, tiles: tiles).toList();
+      return Scaffold(
+        appBar: new AppBar(
+          title: const Text('Saved Suggestions'),
+        ),
+        body: new ListView(children: divided),
+      );
+    }));
   }
 
   Widget _buildSuggestion() {
